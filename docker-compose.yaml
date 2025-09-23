@@ -1,0 +1,10 @@
+services:
+  app:
+    image: xoderockson/xgame-suhosin-integration-api:latest
+    container_name: xgame-suhosin-integration-api
+    env_file:
+     - .env
+    ports:
+     - 3034:3000
+    volumes:
+     - /var/www/xgame-suhosin-integration-api/.env:/usr/src/app/.env
