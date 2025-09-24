@@ -9,9 +9,16 @@ export class TxService implements OnModuleInit {
   private api: ApiPromise;
 
   async onModuleInit() {
-    const wsProvider = new WsProvider("wss://rpc1.paseo.popnetwork.xyz/");
+    const wsProviderUrl = process.env.WS_PROVIDER;
+
+    if (!wsProviderUrl) {
+      throw new Error('Missing WS_PROVIDER in .env');
+    }
+
+    const wsProvider = new WsProvider(wsProviderUrl);
     this.api = await ApiPromise.create({ provider: wsProvider });
-    Logger.log('Polkadot API initialized');
+
+    Logger.log(`Polkadot API initialized with ${wsProviderUrl}`);
   }
 
   async getContract(contractAddress: string) {
